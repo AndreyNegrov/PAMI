@@ -380,7 +380,7 @@ class ClientImpl implements IClient
         $id = $message->getActionID('ActionID');
         if (isset($this->incomingQueue[$id])) {
             $response = $this->incomingQueue[$id];
-            if ($response->isComplete()) {
+            if ($response->isComplete() || (isset($message->getKeys()['action']) && $message->getKeys()['action'] === 'Command')) {
                 unset($this->incomingQueue[$id]);
                 $ret = $response;
             }
